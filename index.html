@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We're Expecting!</title>
+    <style>
+        /* --- Google Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap');
+
+        /* --- Global Styles & Variables --- */
+        :root {
+            --primary-color: #fdfaf6; /* Soft cream background */
+            --secondary-color: #8ab0ab; /* Muted teal */
+            --accent-color: #e4c3ad; /* Soft peach */
+            --text-color: #5d5d5d; /* Dark gray */
+            --white-color: #ffffff;
+            --font-family: 'Poppins', sans-serif;
+            --heading-font: 'Playfair Display', serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-family: var(--heading-font);
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+        }
+
+        p {
+            max-width: 600px;
+            margin: 1rem auto;
+            font-weight: 300;
+        }
+
+        /* --- Section Styling --- */
+        .content-section {
+            padding: 50px 20px;
+        }
+        
+        /* Add white background to specific sections for visual separation */
+        #registry, #gallery-section, .comments-section {
+            background-color: var(--white-color);
+        }
+
+        #announcement-text {
+            padding-top: 5px;
+            padding-bottom: 10px;
+        }
+
+        .card {
+            background-color: var(--white-color);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.07);
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 700px;
+        }
+
+        /* --- Decorative HR --- */
+        .fancy-hr {
+            border: 0;
+            height: 1px;
+            width: 50%;
+            margin: 2rem auto;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--accent-color), rgba(0, 0, 0, 0));
+        }
+
+        /* --- Header / Hero Section --- */
+        .hero {
+            position: relative;
+            min-height: 60vh; /* Reduced vertical height */
+            background-image: url('https://stbabyboyhamilton.blob.core.windows.net/images/hero_img.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 0 50% 50% / 0 0 8% 8%;
+        }
+
+        /* --- Countdown Timer Section --- */
+        .countdown-section {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 50px 20px;
+            border-radius: 0 0 50% 50% / 0 0 8% 8%;
+            margin-bottom: 30px;
+        }
+
+        .countdown-section h2 {
+            color: var(--white-color);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .timer-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            min-width: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-family: var(--heading-font);
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 50px; /* Space for arrows */
+        }
+        
+        .gallery-wrapper {
+            overflow: hidden;
+        }
+
+        .gallery {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            padding-bottom: 10px; /* space for scrollbar if it appears */
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            min-height: 220px; /* Prevents layout shift while images load */
+            align-items: center;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        .gallery::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .gallery img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* Indicates images are clickable */
+            flex-shrink: 0;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            color: var(--text-color);
+        }
+
+        .scroll-arrow:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .scroll-arrow.hidden {
+            display: none;
+        }
+
+        #prev-btn { left: 5px; }
+        #next-btn { right: 5px; }
+
+        /* --- Registry Section --- */
+        .registry-links {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--white-color);
+            padding: 14px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* --- Image Modal Styles --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.85); /* Black w/ opacity */
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0}
+            to {opacity: 1}
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 85vh;
+            border-radius: 8px;
+            animation: zoomIn 0.3s;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .modal-content-form {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: none;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            position: relative;
+            animation: zoomIn 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes zoomIn {
+            from {transform: scale(0.8)}
+            to {transform: scale(1)}
+        }
+        
+        .modal-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .modal-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            color: #ddd;
+        }
+        #modal-prev { left: 10px; }
+        #modal-next { right: 10px; }
+
+        .close-modal, .close-comment-modal {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #aaa;
+            font-size: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus,
+        .close-comment-modal:hover,
+        .close-comment-modal:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* --- Comments Section --- */
+        .comments-section {
+            padding: 40px 20px;
+        }
+        
+        #open-comment-modal-btn {
+            margin-top: 20px;
+        }
+
+        .comment-form {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .comment-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        #char-count {
+            font-size: 0.8rem;
+            color: #999;
+            text-align: right;
+            margin-top: -10px;
+        }
+
+        .comment-feed {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            max-height: 400px; /* Set a max height */
+            overflow-y: auto;   /* Make it scrollable */
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px 20px;
+            background-color: #fdfdfd;
+        }
+
+        .comment {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .comment-date {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-left: 10px;
+        }
+
+        .comment-message {
+            margin-top: 5px;
+        }
+
+        #loading-comments, #loading-gallery {
+            color: #999;
+            padding: 20px;
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 20px;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+        
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            
+            .hero {
+                min-height: 40vh;
+            }
+
+            .gallery-container {
+                padding: 0 40px;
+            }
+            
+            .countdown-timer {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .timer-box {
+                width: 80%;
+            }
+
+            .gallery {
+                gap: 15px;
+            }
+
+            .gallery img {
+                width: 80vw;
+                height: 80vw;
+            }
+
+            .modal-content {
+                max-width: 90%;
+            }
+        }
+        
+        /* --- Styles for Larger Screens --- */
+        @media (min-width: 1280px) {
+            body {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            .page-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-content">
+        <!-- Header / Image Section -->
+        <header class="hero">
+            <!-- This section is now just for the main image -->
+        </header>
+
+        <!-- Announcement Text Section -->
+        <section id="announcement-text" class="content-section">
+            <h1>We're Expecting!</h1>
+            <p>Our greatest adventure is about to begin.</p>
+            <h2>Baby Boy Hamilton</h2>
+            <p>Arriving March 2026</p>
+        </section>
+        
+        <hr class="fancy-hr">
+
+        <!-- Registry Section -->
+        <section id="registry" class="content-section">
+            <h2>Baby Registry</h2>
+            <p>Your love and support are the only gifts we need! However, if you'd like to help us get ready for our little one, we've put together a registry with a few things we think we'll need.</p>
+            <div class="registry-links">
+                <!-- PLACEHOLDER: Update the '#' with real links to registries -->
+                <a href="#" class="btn">Target Registry</a>
+                <a href="#" class="btn">Amazon Registry</a>
+                <a href="#" class="btn">Babylist Registry</a>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section id="countdown" class="countdown-section">
+            <h2>Counting Down the Days</h2>
+            <div class="countdown-timer">
+                <div class="timer-box">
+                    <span id="days">0</span>
+                    Days
+                </div>
+                <div class="timer-box">
+                    <span id="hours">0</span>
+                    Hours
+                </div>
+                <div class="timer-box">
+                    <span id="minutes">0</span>
+                    Minutes
+                </div>
+                <div class="timer-box">
+                    <span id="seconds">0</span>
+                    Seconds
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section id="story" class="content-section">
+            <h2>Our Little Journey</h2>
+            <p>
+                <!-- PLACEHOLDER: Add a short paragraph about their story or excitement. -->
+                Here you can write a short story about the journey to parenthood, how excited you are, or a sweet message for friends and family. It's a great place to add a personal touch and share the joy with everyone. We are so grateful for all the love and support.
+            </p>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery-section" class="content-section">
+            <h2>Photo Gallery</h2>
+            <div class="gallery-container">
+                <button id="prev-btn" class="scroll-arrow hidden">&#10094;</button>
+                <div class="gallery-wrapper">
+                    <div class="gallery">
+                        <p id="loading-gallery">Loading photos...</p>
+                        <!-- Images will be dynamically inserted here -->
+                    </div>
+                </div>
+                <button id="next-btn" class="scroll-arrow hidden">&#10095;</button>
+            </div>
+        </section>
+
+        <!-- Baby Shower Section -->
+        <section id="shower" class="content-section card">
+            <h2>Baby Shower Details</h2>
+            <p>
+                <!-- PLACEHOLDER: Update this text when details are known. -->
+                Details about the baby shower will be posted here soon! Please check back later for information on the date, time, and location. We can't wait to celebrate with you.
+            </p>
+            <!--
+            *** EXAMPLE WHEN YOU HAVE DETAILS ***
+            <p>You're invited to celebrate with us!</p>
+            <p><strong>Date:</strong> Saturday, November 15, 2025</p>
+            <p><strong>Time:</strong> 2:00 PM - 5:00 PM</p>
+            <p><strong>Location:</strong> 123 Celebration Lane, Happyville</p>
+            <p><strong>RSVP:</strong> Please let us know if you can make it by October 30th.</p>
+            -->
+        </section>
+        
+        <!-- Comments Section -->
+        <section id="comments" class="comments-section content-section">
+            <h2>Well Wishes</h2>
+            <div id="comment-feed" class="comment-feed">
+                <p id="loading-comments">Loading messages...</p>
+                <!-- Comments will be dynamically inserted here -->
+            </div>
+            <button id="open-comment-modal-btn" class="btn">Leave a Message</button>
+        </section>
+
+    </main>
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <button id="modal-prev" class="modal-arrow">&#10094;</button>
+        <img class="modal-content" id="modalImage">
+        <button id="modal-next" class="modal-arrow">&#10095;</button>
+    </div>
+
+    <!-- Comment Form Modal -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content-form">
+            <span class="close-comment-modal">&times;</span>
+            <h2>Leave a Message</h2>
+            <form id="comment-form" class="comment-form">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <textarea id="message" name="message" placeholder="Your congratulatory message..." maxlength="256" required></textarea>
+                <div id="char-count">256 characters remaining</div>
+                <button type="submit" class="btn">Post Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made with ❤️ for Miranda & Connor Hamilton</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- Azure Function URLs ---
+        const addCommentUrl = "https://babyboyhamilton-czacakg7d2dbebbv.eastus-01.azurewebsites.net/api/addComment";
+        const getCommentsUrl = "https://babyboyhamilton-czacakg7d2dbebbv.eastus-01.azurewebsites.net/api/getComments";
+        
+        // --- Azure Blob Storage URL for Gallery ---
+        const blobContainerUrl = "https://stbabyboyhamilton.blob.core.windows.net/images";
+
+
+        // --- Countdown Timer Logic ---
+        const dueDate = new Date("March 28, 2026 00:00:00").getTime();
+        const interval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = dueDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const daysEl = document.getElementById("days");
+            const hoursEl = document.getElementById("hours");
+            const minutesEl = document.getElementById("minutes");
+            const secondsEl = document.getElementById("seconds");
+
+            if (daysEl) daysEl.innerText = days;
+            if (hoursEl) hoursEl.innerText = hours;
+            if (minutesEl) minutesEl.innerText = minutes;
+            if (secondsEl) secondsEl.innerText = seconds;
+
+            if (distance < 0) {
+                clearInterval(interval);
+                const countdownSection = document.getElementById("countdown");
+                if(countdownSection) {
+                    countdownSection.innerHTML = "<h2>The little one is here! Welcome to the world!</h2>";
+                }
+            }
+        }, 1000);
+        
+        // --- Image Modal Logic ---
+        const imageModal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeModal = document.querySelector(".close-modal");
+        const modalPrevBtn = document.getElementById("modal-prev");
+        const modalNextBtn = document.getElementById("modal-next");
+        let galleryImages = []; // This will be populated dynamically
+        let currentImageIndex;
+
+        const openImageModal = (index) => {
+            currentImageIndex = index;
+            modalImg.src = galleryImages[currentImageIndex].src;
+            imageModal.style.display = "block";
+        };
+        
+        const showNextImage = () => {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            modalImg.src = galleryImages[currentImageIndex].src;
+        };
+
+        const showPrevImage = () => {
+            if (galleryImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            modalImg.src = galleryImages[currentImageIndex].src;
+        };
+        
+        if(modalNextBtn) modalNextBtn.onclick = showNextImage;
+        if(modalPrevBtn) modalPrevBtn.onclick = showPrevImage;
+
+        const hideImageModal = function() {
+            if(imageModal) imageModal.style.display = "none";
+        }
+
+        if(closeModal) closeModal.onclick = hideImageModal;
+        if(imageModal) imageModal.addEventListener('click', function(event) {
+            if (event.target === event.currentTarget) {
+                hideImageModal();
+            }
+        });
+
+        // --- Gallery Logic ---
+        const galleryWrapper = document.querySelector(".gallery-wrapper");
+        const gallery = document.querySelector(".gallery");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const loadingGallery = document.getElementById('loading-gallery');
+
+        const setupGalleryEventListeners = () => {
+            // Re-query for the images now that they exist in the DOM
+            galleryImages = document.querySelectorAll(".gallery img");
+            galleryImages.forEach((img, index) => {
+                img.onclick = () => openImageModal(index);
+            });
+        };
+
+        const loadGalleryImagesFromBlob = async () => {
+            const listUrl = `${blobContainerUrl}?restype=container&comp=list`;
+            try {
+                const response = await fetch(listUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const xmlString = await response.text();
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+                const blobNames = Array.from(xmlDoc.getElementsByTagName("Name")).map(el => el.textContent);
+
+                // Filter out the hero image from the gallery
+                const galleryBlobNames = blobNames.filter(name => name !== 'hero_image.JPG');
+
+                if (galleryBlobNames && galleryBlobNames.length > 0) {
+                    loadingGallery.style.display = 'none';
+                    galleryBlobNames.forEach(name => {
+                        const img = document.createElement('img');
+                        img.src = `${blobContainerUrl}/${name}`;
+                        img.alt = "Gallery photo";
+                        img.onerror = "this.onerror=null;this.src='https://placehold.co/220x220';";
+                        gallery.appendChild(img);
+                    });
+                    
+                    // Show arrows if there's content to scroll
+                    if (gallery.scrollWidth > gallery.clientWidth) {
+                        prevBtn.classList.remove('hidden');
+                        nextBtn.classList.remove('hidden');
+                    }
+                    
+                    setupGalleryEventListeners();
+
+                } else {
+                    loadingGallery.textContent = 'No photos to show yet!';
+                }
+            } catch (error) {
+                console.error('Error fetching gallery images from blob:', error);
+                loadingGallery.textContent = 'Error: Could not load photos.';
+            }
+        };
+
+        if (galleryWrapper && gallery) {
+            nextBtn.addEventListener("click", () => {
+                const scrollAmount = galleryWrapper.clientWidth;
+                gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+            prevBtn.addEventListener("click", () => {
+                const scrollAmount = galleryWrapper.clientWidth;
+                gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+        }
+
+        // --- Comments Logic ---
+        const commentModal = document.getElementById('commentModal');
+        const openCommentBtn = document.getElementById('open-comment-modal-btn');
+        const closeCommentBtn = document.querySelector('.close-comment-modal');
+        const commentForm = document.getElementById('comment-form');
+        const messageInput = document.getElementById('message');
+        const charCount = document.getElementById('char-count');
+        const commentFeed = document.getElementById('comment-feed');
+        const loadingComments = document.getElementById('loading-comments');
+
+        const hideCommentModal = () => {
+            if(commentModal) commentModal.style.display = "none";
+        }
+        
+        if (openCommentBtn) {
+            openCommentBtn.onclick = () => {
+                if(commentModal) commentModal.style.display = "block";
+            };
+        }
+        if (closeCommentBtn) closeCommentBtn.onclick = hideCommentModal;
+        if (commentModal) {
+            commentModal.addEventListener('click', function(event) {
+                if (event.target === event.currentTarget) {
+                    hideCommentModal();
+                }
+            });
+        }
+
+        if (messageInput) {
+            messageInput.addEventListener('input', () => {
+                const remaining = 256 - messageInput.value.length;
+                charCount.textContent = `${remaining} characters remaining`;
+            });
+        }
+
+        if (commentForm) {
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const message = messageInput.value;
+                const submitButton = commentForm.querySelector('button');
+
+                submitButton.disabled = true;
+                submitButton.textContent = 'Posting...';
+
+                try {
+                    const response = await fetch(addCommentUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, message })
+                    });
+
+                    if (response.ok) {
+                        commentForm.reset();
+                        charCount.textContent = '256 characters remaining';
+                        addCommentToFeed({ Name: name, Message: message, Timestamp: new Date().toISOString() }, true);
+                        hideCommentModal();
+                    } else {
+                        const errorData = await response.json();
+                        alert(`Error: ${errorData.message || 'There was an error posting your comment.'}`);
+                    }
+                } catch (error) {
+                    console.error('Error submitting comment:', error);
+                    alert('Could not connect to the server. This is likely a CORS issue.');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Post Message';
+                }
+            });
+        }
+
+        const formatCommentDate = (dateString) => {
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+        };
+
+        const addCommentToFeed = (comment, isNew = false) => {
+            if (loadingComments) {
+                loadingComments.style.display = 'none';
+            }
+            
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <p>
+                    <span class="comment-author">${comment.Name}</span>
+                    <span class="comment-date">${formatCommentDate(comment.Timestamp)}</span>
+                </p>
+                <p class="comment-message">${comment.Message}</p>
+            `;
+
+            if (isNew) {
+                commentFeed.prepend(commentElement);
+            } else {
+                commentFeed.appendChild(commentElement);
+            }
+        };
+
+        const loadComments = async () => {
+            try {
+                const response = await fetch(getCommentsUrl);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const comments = await response.json();
+                
+                if (comments && comments.length > 0) {
+                    comments.forEach(comment => addCommentToFeed(comment));
+                } else {
+                    loadingComments.textContent = 'Be the first to leave a message!';
+                }
+            } catch (error) {
+                console.error('Error fetching comments:', error);
+                loadingComments.textContent = 'Error: Could not load messages. Likely a CORS issue.';
+            }
+        };
+
+        // --- Initial Page Load ---
+        loadGalleryImagesFromBlob();
+        loadComments();
+
+    });
+    </script>
+</body>
+</html>
+
