@@ -287,13 +287,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadComments = async () => {
         try {
             const response = await fetch(getCommentsUrl);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const comments = await response.json();
-            
-            if (comments && comments.length > 0) {
-                comments.forEach(comment => addCommentToFeed(comment));
+            if (!response.ok) {
+                 throw new Error(`HTTP error! status: ${response.status}`);
             } else {
-                loadingComments.textContent = 'Be the first to leave a message!';
+                const comments = await response.json();
+                
+                if (comments.length > 0) {
+                    comments.forEach(comment => addCommentToFeed(comment));
+                } else {
+                    loadingComments.textContent = 'Be the first to leave a message!';
+                }
             }
         } catch (error) {
             console.error('Error fetching comments:', error);
