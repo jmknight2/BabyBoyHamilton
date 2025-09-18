@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- Countdown Timer Logic ---
-    const dueDate = new Date("March 28, 2026 00:00:00");
+    const dueDate = new Date("March 1, 2026 00:00:00");
     const countdownInterval = setInterval(function() {
         const now = new Date();
         
