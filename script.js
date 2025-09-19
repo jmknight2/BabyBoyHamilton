@@ -271,10 +271,10 @@ document.addEventListener('DOMContentLoaded', function() {
         commentElement.className = 'comment';
         commentElement.innerHTML = `
             <p>
-                <span class="comment-author">${comment.Name}</span>
-                <span class="comment-date">${formatCommentDate(comment.Timestamp)}</span>
+                <span class="comment-author">${comment.name}</span>
+                <span class="comment-date">${formatCommentDate(comment.timestamp)}</span>
             </p>
-            <p class="comment-message">${comment.Message}</p>
+            <p class="comment-message">${comment.message}</p>
         `;
 
         if (isNew) {
