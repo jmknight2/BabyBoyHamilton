@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     commentForm.reset();
                     charCount.textContent = '256 characters remaining';
-                    addCommentToFeed({ Name: name, Message: message, Timestamp: new Date().toISOString() }, true);
+                    addCommentToFeed({ name: name, message: message, timestamp: new Date().toISOString() }, true);
                     hideCommentModal();
                 } else {
                     const errorData = await response.json();
