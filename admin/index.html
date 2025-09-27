@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Management</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>Admin Login</h2>
+            <form id="login-form">
+                <input type="password" id="password" placeholder="Enter password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p id="login-status" style="color: red;"></p>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p id="confirm-message">Are you sure you want to delete this image?</p>
+            <div class="confirm-buttons">
+                <button id="cancel-delete-btn" class="btn">Cancel</button>
+                <button id="confirm-delete-btn" class="btn delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden by default) -->
+    <div id="main-content" class="container" style="display: none;">
+        <button id="logout-btn" class="btn delete">Logout</button>
+        <h1>Image Management</h1>
+        <p>Upload new photos to the gallery or remove existing ones.</p>
+        
+        <hr>
+
+        <h2>Upload New Image</h2>
+        <div class="file-upload-wrapper">
+            <label for="fileInput" class="btn file-input-label">Choose File</label>
+            <input type="file" id="fileInput" accept=".png, .jpg, .jpeg">
+            <span id="file-name-display">No file chosen</span>
+        </div>
+        <img id="preview" src="" alt="Image preview" style="display: none;">
+        <button id="uploadBtn" class="btn">Upload Image</button>
+
+        <hr style="margin-top: 2rem;">
+
+        <h2>Current Gallery Images</h2>
+        <div id="gallery" class="gallery">
+            <p id="loading-gallery">Loading photos...</p>
+        </div>
+
+        <div id="status"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
